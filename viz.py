@@ -84,7 +84,7 @@ def timeseries():
     df = pd.read_csv('data/Land_Ocean_Monthly_Anomaly_Average.csv')
     df['datetime'] = pd.to_datetime(df['datetime'])
     df = df[['anomaly','datetime']]
-    df['moving_average'] = pd.rolling_mean(df['anomaly'], 12)
+    df['moving_average'] = df['moving_average'] = df['anomaly'].rolling(window=12, center=False).mean()
     df = df.fillna(0)
     
     # List all the tools that you want in your plot separated by comas, all in one string.
@@ -109,7 +109,7 @@ def timeseries():
     t.xaxis[0].formatter = xformatter
     t.xaxis.major_label_orientation = math.pi/4
     t.yaxis.axis_label = 'Anomaly(ºC)'
-    t.legend.orientation = "bottom_right"
+    t.legend.orientation = "vertical"
     t.grid.grid_line_alpha=0.2
     t.toolbar_location=None
 
